@@ -15,7 +15,7 @@
 //editors
 //menu()
 //are skills going to be an array of function pointers?
-#include <ncurses>//for input and output
+#include <ncurses.h>//for input and output
 #include <cstdlib>//for random
 #include <ctime>//for random
 

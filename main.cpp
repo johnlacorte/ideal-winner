@@ -18,11 +18,22 @@
 #include <ncurses.h>//for input and output
 #include <cstdlib>//for random
 #include <ctime>//for random
+#include "map.h"
+//#include <iostream>
 
 int main()
 {
+    Map levelMap(12, 12);
+    //Tile t;
     initscr();/* Start curses mode*/
-
+    //t.setTile(true, true, '#', ' ', ' ');
+    //std::cout << t.getSymbol() << std::endl;
+    levelMap.fillSquare(1, 1, 10, 10, true, '.');
+    levelMap.look(4, 4, 4);
+    printw("\n");
+    levelMap.insertCreature(4, 4, '@');
+    levelMap.look(4, 4, 4);
+    getch();
     endwin();/* End curses mode		  */
     return 0;
 }

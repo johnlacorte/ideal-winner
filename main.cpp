@@ -4,34 +4,29 @@
 */
 
 //TODO
-//I need to store the level
-//I need to store individual spaces in the level
-//I need to store players
-//I need to store monsters
-//I need to store guardians
-//I need to store items
 //messages
-//input/output
+//input/output in a neat package
 //editors
 //menu()
-//are skills going to be an array of function pointers?
 #include <ncurses.h>//for input and output
 #include <cstdlib>//for random
 #include <ctime>//for random
 #include "map.h"
+#include "creature.h"
 //#include <iostream>
 
 int main()
 {
     Map levelMap(12, 12);
-    //Tile t;
+    CreatureArray cArray(&levelMap);
     initscr();/* Start curses mode*/
-    //t.setTile(true, true, '#', ' ', ' ');
-    //std::cout << t.getSymbol() << std::endl;
     levelMap.fillSquare(1, 1, 10, 10, true, '.');
     levelMap.look(4, 4, 4);
     printw("\n");
-    levelMap.insertCreature(4, 4, '@');
+    cArray.setCreature(1, '@', 4, 4);
+    levelMap.insertCreature(4, 4, 1, '@');
+    levelMap.look(4, 4, 4);
+    cArray.move(1, 5, 4);
     levelMap.look(4, 4, 4);
     getch();
     endwin();/* End curses mode		  */

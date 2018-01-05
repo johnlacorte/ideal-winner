@@ -1,33 +1,27 @@
 //Tile class and Map class functions
 //Header files
 #include <ncurses.h>
-//#include <iostream>
 #include "map.h"
 
 Tile::Tile()
 {
-    //std::cout << "creating tile" << std::endl;
-    isPassable = false;
-    isMapped = false;
+    passable = false;
+    mapped = false;
     floorSymbol = '#';
     creatureSymbol = ' ';
     itemSymbol = ' ';
-}
-
-Tile::~Tile()
-{
-
+    creatureHere = 0;
 }
 
 void Tile::setTile(bool pass, char floor)
 {
-    isPassable = pass;
+    passable = pass;
     floorSymbol = floor;
 }
 
 char Tile::getSymbol()
 {
-    isMapped = true;
+    mapped = true;
     if(creatureSymbol != ' ')
     {
         return creatureSymbol;
@@ -42,9 +36,21 @@ char Tile::getSymbol()
     }
 }
 
-void Tile::insertCreature(char sym)
+void Tile::insertCreature(int offset, char sym)
 {
     creatureSymbol = sym;
+    creatureHere = offset;
+}
+
+void Tile::removeCreature()
+{
+    creatureSymbol = ' ';
+    creatureHere = 0;
+}
+
+int Tile::isCreatureHere()
+{
+    return creatureHere;
 }
 
 void Tile::insertItem(char sym)
@@ -52,21 +58,23 @@ void Tile::insertItem(char sym)
     itemSymbol = sym;
 }
 
+bool Tile::isPassable()
+{
+    return passable;
+}
 Map::Map(int width, int height)
 {
     mapWidth = width;
     mapHeight = height;
     mapTiles = new Tile[width * height];
-    //Tile mapTiles[width][height];
 }
 
-//Map::~Map()//free up memory for tiles, maybe not necessary but hey.
 Map::~Map()
 {
     delete mapTiles;
 }
 
-size_t Map::index( int x, int y )
+int Map::index( int x, int y )
 {
     return x + mapWidth * y;
 }
@@ -110,13 +118,25 @@ void Map::fillSquare(int x, int y, int w, int h, bool pass, char floor)
         }
     }
 }
-void Map::insertCreature(int x, int y, char sym)
+void Map::insertCreature(int x, int y, int offset, char sym)
 {
-    mapTiles[index(x, y)].insertCreature(sym);
+    mapTiles[index(x, y)].insertCreature(offset, sym);
 }
 
+void Map::removeCreature(int x, int y)
+{
+    mapTiles[index(x, y)].removeCreature();
+}
+
+int Map::isCreatureHere(int x, int y)
+{
+    return mapTiles[index(x, y)].isCreatureHere();
+}
 void Map::insertItem(int x, int y, char sym)
 {
     mapTiles[index(x, y)].insertItem(sym);
 }
-
+bool Map::isPassable(int x, int y)
+{
+    mapTiles[index(x, y)].isPassable();
+}

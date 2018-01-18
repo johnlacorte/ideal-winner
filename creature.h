@@ -10,38 +10,49 @@ class Creature
     int myX, myY;
     //A small array or structure or tuple would let me use it as a return value
     public:
+    Creature *previous, *next;
+    Creature();//Probably want to fill in all the data in the constructor
+    void insertToMap(Map *level, int offset);
+    void removeFromMap(Map *level);
     void setCreature(char sym, int x, int y);
-    void move(Map *level, int offset, Creature *me, int x, int y);
+    void moveTo(Map *level, int offset, int x, int y);
+    int getX();
+    int getY();
     char getSymbol();
-    //void turn(Map *level);//Virtual function
+    virtual int turn(Map *level, int offset) = 0;//The turn function is probably the biggest thing that differs between types
 };
 
-class Player : Creature
+class Player :public Creature
 {
-
+    public:
+    int turn(Map *level, int offset);
 };
 
-class Guardian : Creature
+class Guardian :public Creature
 {
-
+    public:
+    int turn(Map *level, int offset);
 };
 
-class Monster : Creature
+class Monster :public Creature
 {
-
+    public:
+    int turn(Map *level, int offset);
 };
 
-class CreatureArray
+class CreatureList
 {
     private:
-    int creArraySize;
-    Creature creArray[10];
+    Creature *head;
     Map *thisLevel;
     public:
-    CreatureArray(Map *level);
-    Creature *getCrePtr(int n);
-    void setCreature(int offset, char sym, int x, int y);
-    void move(int offset, int x, int y);
+    CreatureList(Map *level);
+    void addToList(Creature *cre);
+    void removeFromList(Creature *cre);
+    int start();//signal why loop ended, maybe bitmasks.
+    //void setCreature(int offset, char sym, int x, int y);
+    //void moveTo(int offset, int x, int y);
+    //void turn(int offset);
 };
 
 #endif

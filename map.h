@@ -45,6 +45,7 @@ class Map
     int isCreatureHere(int x, int y);
     bool isPassable(int x, int y);
     void insertItem(int x, int y, char sym);
+    void testMap();
 };
 
 #endif

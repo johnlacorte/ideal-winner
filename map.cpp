@@ -1,5 +1,5 @@
 //Tile class and Map class functions
-//Header files
+
 #include <ncurses.h>
 #include "map.h"
 
@@ -84,6 +84,7 @@ void Map::look(int x, int y, int radius)
     //From the center? or top left?
     //if the tile is outside the boundries of the map print a space
     char sym;
+    move(4,0);
     for(int j = y - radius; j < y + radius + 1; ++j)
     {
         for(int i = x - radius; i < x + radius + 1; ++i)
@@ -93,16 +94,13 @@ void Map::look(int x, int y, int radius)
                 sym = mapTiles[index(i, j)].getSymbol();
                 printw("%c", sym);
 		printw(" ");
-		//std::cout << sym << ' ';
             }
 	    else
             {
                 printw("  ");
-		//std::cout << "  ";
             }
         }
 	printw("\n");
-	//std::cout << std::endl;
     }
     refresh();
 }
@@ -110,11 +108,17 @@ void Map::look(int x, int y, int radius)
 void Map::fillSquare(int x, int y, int w, int h, bool pass, char floor)
 {
     //check if x and y are in range
-    for(int j = y; j < y + h; ++j)
+    if(x > 0 && y > 0)
     {
-        for(int i = x; i < x + w; ++i)
+        if(x + w < mapWidth && y + h < mapHeight)
         {
-            mapTiles[index(i, j)].setTile(pass, floor);
+            for(int j = y; j < y + h; ++j)
+            {
+                for(int i = x; i < x + w; ++i)
+                {
+                    mapTiles[index(i, j)].setTile(pass, floor);
+                }
+            }
         }
     }
 }
@@ -139,4 +143,9 @@ void Map::insertItem(int x, int y, char sym)
 bool Map::isPassable(int x, int y)
 {
     mapTiles[index(x, y)].isPassable();
+}
+
+void Map::testMap()
+{
+    fillSquare(1, 1, 10, 10, true, '.');
 }

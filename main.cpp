@@ -13,22 +13,39 @@
 #include <ctime>//for random
 #include "map.h"
 #include "creature.h"
-//#include <iostream>
 
 int main()
 {
     Map levelMap(12, 12);
-    CreatureArray cArray(&levelMap);
+    Player hero;
+    Monster enemy;
+    Creature *selected;
+    int counter = 1;
     initscr();/* Start curses mode*/
-    levelMap.fillSquare(1, 1, 10, 10, true, '.');
-    levelMap.look(4, 4, 4);
-    printw("\n");
-    cArray.setCreature(1, '@', 4, 4);
-    levelMap.insertCreature(4, 4, 1, '@');
-    levelMap.look(4, 4, 4);
-    cArray.move(1, 5, 4);
-    levelMap.look(4, 4, 4);
-    getch();
+    raw();
+    noecho();
+    levelMap.testMap();
+    hero.setCreature('@', 4, 4);
+    hero.insertToMap(&levelMap, 2);
+    enemy.setCreature('g', 6, 6);
+    enemy.insertToMap(&levelMap, 1);
+    enemy.next = &hero;
+    hero.previous = &enemy;
+    selected = &enemy;
+    while(selected->turn(&levelMap, counter) == 1)
+    {
+        if(selected->next != NULL)
+        {
+            selected = selected->next;
+            ++counter;
+        }
+	else
+        {
+            selected = &enemy;//temporary creatureArrayHead
+	    counter = 1;
+        }
+
+    }
     endwin();/* End curses mode		  */
     return 0;
 }

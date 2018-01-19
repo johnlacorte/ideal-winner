@@ -9,14 +9,14 @@ Creature::Creature()//Probably want to fill in all the data in the constructor
     next = NULL;
 }
 
-void Creature::insertToMap(Map *level, int offset)
+void Creature::insertToMap(Map *levelMap, int offset)
 {
-    level->insertCreature(myX, myY, offset, symbol);
+    levelMap->insertCreature(myX, myY, offset, symbol);
 }
 
-void Creature::removeFromMap(Map *level)
+void Creature::removeFromMap(Map *levelMap)
 {
-    level->removeCreature(myX, myY);
+    levelMap->removeCreature(myX, myY);
 }
 
 void Creature::setCreature(char sym, int x, int y)
@@ -42,34 +42,34 @@ char Creature::getSymbol()
 }
 
 //I might not actually NEED cArray if there are pointers
-void Creature::moveTo(Map *level, int offset, int x, int y)
+void Creature::moveTo(Map *levelMap, int offset, int x, int y)
 {
     //Check if a creature is there, if so get its type and attack
     //Maybe return check value? Attacking is something I need to consider
-    int check = level->isCreatureHere(x, y);
+    int check = levelMap->isCreatureHere(x, y);
     //char mySymbol = cArray[offset].getSymbol();
     	if(check != 0)
         {
             //walkthrough list and attack()
 	    //move(1,1);
         }
-        else if(level->isPassable(x, y))//check if it is passable
+        else if(levelMap->isPassable(x, y))//check if it is passable
         {
             //move yourself then
-	        level->removeCreature(myX, myY);
+	        levelMap->removeCreature(myX, myY);
 	        myX = x;
 	        myY = y;
-	        level->insertCreature(x, y, offset, symbol);
+	        levelMap->insertCreature(x, y, offset, symbol);
         }
     //Check to keep from going off the map too
 }
 
-int Player::turn(Map *level, int offset)
+int Player::turn(Map *levelMap, int offset)
 {
     char input;
     bool getInput = true;
     int moveToX, moveToY;
-    level->look(getX(), getY(), 4);
+    levelMap->look(getX(), getY(), 4);
     while(getInput)
     {
         input = getch();
@@ -102,7 +102,7 @@ int Player::turn(Map *level, int offset)
                 moveToX = getX();
 	        }
 	        //I think this means a '5' moves back to original place
-	        moveTo(level, offset, moveToX, moveToY);
+	        moveTo(levelMap, offset, moveToX, moveToY);
             return 1;
         }
         else if(input == 'q')
@@ -112,23 +112,27 @@ int Player::turn(Map *level, int offset)
     }
 }
 
-int Guardian::turn(Map *level, int offset)
+int Guardian::turn(Map *levelMap, int offset)
 {
     return 1;
 }
 
-int Monster::turn(Map *level, int offset)
+int Monster::turn(Map *levelMap, int offset)
 {
     return 1;
 }
 
-CreatureList::CreatureList(Map *level)
+CreatureList::CreatureList()
 {
-    thisLevel = level;
+    thisMap = NULL;
     head = NULL;
 }
 
 //add new creature
+void CreatureList::setMap(Map *levelMap)
+{
+    thisMap = levelMap;
+}
 
 void CreatureList::addToList(Creature *cre)
 {
@@ -177,7 +181,7 @@ int CreatureList::start()
     int offsetCounter = 1;
     int ret;
     //check if head is NULL first
-    ret = selected->turn(thisLevel, offsetCounter);
+    ret = selected->turn(thisMap, offsetCounter);
     while(ret == 1)
     {
         if(selected->next != NULL)
@@ -190,7 +194,7 @@ int CreatureList::start()
             selected = head;
 	    offsetCounter = 1;
         }
-        ret = selected->turn(thisLevel, offsetCounter);
+        ret = selected->turn(thisMap, offsetCounter);
     }
     return ret;
 }

@@ -12,41 +12,42 @@ class Creature
     public:
     Creature *previous, *next;
     Creature();//Probably want to fill in all the data in the constructor
-    void insertToMap(Map *level, int offset);
-    void removeFromMap(Map *level);
+    void insertToMap(Map *levelMap, int offset);
+    void removeFromMap(Map *levelMap);
     void setCreature(char sym, int x, int y);
-    void moveTo(Map *level, int offset, int x, int y);
+    void moveTo(Map *levelMap, int offset, int x, int y);
     int getX();
     int getY();
     char getSymbol();
-    virtual int turn(Map *level, int offset) = 0;//The turn function is probably the biggest thing that differs between types
+    virtual int turn(Map *levelMap, int offset) = 0;//The turn function is probably the biggest thing that differs between types
 };
 
 class Player :public Creature
 {
     public:
-    int turn(Map *level, int offset);
+    int turn(Map *levelMap, int offset);
 };
 
 class Guardian :public Creature
 {
     public:
-    int turn(Map *level, int offset);
+    int turn(Map *levelMap, int offset);
 };
 
 class Monster :public Creature
 {
     public:
-    int turn(Map *level, int offset);
+    int turn(Map *levelMap, int offset);
 };
 
 class CreatureList
 {
     private:
     Creature *head;
-    Map *thisLevel;
+    Map *thisMap;
     public:
-    CreatureList(Map *level);
+    CreatureList();
+    void setMap(Map *levelMap);
     void addToList(Creature *cre);
     void removeFromList(Creature *cre);
     int start();//signal why loop ended, maybe bitmasks.

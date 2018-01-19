@@ -12,6 +12,7 @@ class Level
     //loot piles
     public:
     Level(Creature *pl);//second version for generating the level
-    char *start();
+    int start();
     void test();
-}
+};
+#endif

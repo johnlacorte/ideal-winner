@@ -11,41 +11,37 @@
 #include <ncurses.h>//for input and output
 #include <cstdlib>//for random
 #include <ctime>//for random
-#include "map.h"
+#include "level.h"
 #include "creature.h"
 
 int main()
 {
-    Map levelMap(12, 12);
+    //Map levelMap(12, 12);
     Player hero;
-    Monster enemy;
-    Creature *selected;
-    int counter = 1;
+    Level testLevel(&hero);
     initscr();/* Start curses mode*/
     raw();
     noecho();
-    levelMap.testMap();
     hero.setCreature('@', 4, 4);
-    hero.insertToMap(&levelMap, 2);
-    enemy.setCreature('g', 6, 6);
-    enemy.insertToMap(&levelMap, 1);
-    enemy.next = &hero;
-    hero.previous = &enemy;
-    selected = &enemy;
-    while(selected->turn(&levelMap, counter) == 1)
-    {
-        if(selected->next != NULL)
-        {
-            selected = selected->next;
-            ++counter;
-        }
-	else
-        {
-            selected = &enemy;//temporary creatureArrayHead
-	    counter = 1;
-        }
+    //enemy.next = &hero;
+    //hero.previous = &enemy;
+    //selected = &enemy;
+    //while(selected->turn(&levelMap, counter) == 1)
+    //{
+    //    if(selected->next != NULL)
+    //    {
+    //        selected = selected->next;
+    //        ++counter;
+    //    }
+	//else
+    //    {
+    //        selected = &enemy;//temporary creatureArrayHead
+	//    counter = 1;
+    //    }
 
-    }
+    //}
+    testLevel.test();
+    testLevel.start();
     endwin();/* End curses mode		  */
     return 0;
 }

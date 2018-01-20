@@ -2,6 +2,9 @@
 //look() might be better off in another class of i/o stuff but that will be later
 #ifndef MAP_H
 #define MAP_H
+
+#include "message.h"
+
 class Tile//I don't know what to do about things like doors
 {
     private:
@@ -33,10 +36,12 @@ class Map
     //Map might need to have functions to build a map
     private:
     Tile *mapTiles;
+    MessageList *msgOutput;
     int mapWidth, mapHeight;
     public:
-    Map(int width, int height);
+    Map(int width, int height, MessageList *ml);
     ~Map();
+    void newMessage(char *msg);
     void look(int x, int y, int size);
     void fillSquare(int x, int y, int w, int h, bool pass, char floor);
     int index( int x, int y );

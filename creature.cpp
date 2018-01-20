@@ -2,6 +2,7 @@
 #include "map.h"
 #include "creature.h"
 #include <ncurses.h>
+#include <cstring>
 
 Creature::Creature()//Probably want to fill in all the data in the constructor
 {
@@ -47,11 +48,14 @@ void Creature::moveTo(Map *levelMap, int offset, int x, int y)
     //Check if a creature is there, if so get its type and attack
     //Maybe return check value? Attacking is something I need to consider
     int check = levelMap->isCreatureHere(x, y);
-    //char mySymbol = cArray[offset].getSymbol();
+        char *msg;
+        //char mySymbol = cArray[offset].getSymbol();
     	if(check != 0)
         {
             //walkthrough list and attack()
-	    //move(1,1);
+            msg = new char[30];
+	    strcpy(msg, "Attack");
+	    levelMap->newMessage(msg);
         }
         else if(levelMap->isPassable(x, y))//check if it is passable
         {

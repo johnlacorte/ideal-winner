@@ -1,7 +1,9 @@
+//Add in level screen output stuff
 //Tile class and Map class functions
 
 #include <ncurses.h>
 #include "map.h"
+#include "message.h"
 
 Tile::Tile()
 {
@@ -62,11 +64,12 @@ bool Tile::isPassable()
 {
     return passable;
 }
-Map::Map(int width, int height)
+Map::Map(int width, int height, MessageList *ml)
 {
     mapWidth = width;
     mapHeight = height;
     mapTiles = new Tile[width * height];
+    msgOutput = ml;
 }
 
 Map::~Map()
@@ -79,12 +82,19 @@ int Map::index( int x, int y )
     return x + mapWidth * y;
 }
 
+void Map::newMessage(char *msg)
+{
+    msgOutput->newMessage(msg);
+}
+
 void Map::look(int x, int y, int radius)
 {
     //From the center? or top left?
     //if the tile is outside the boundries of the map print a space
     char sym;
-    move(4,0);
+    clear();
+    msgOutput->showMessages();
+    //move(4,0);
     for(int j = y - radius; j < y + radius + 1; ++j)
     {
         for(int i = x - radius; i < x + radius + 1; ++i)

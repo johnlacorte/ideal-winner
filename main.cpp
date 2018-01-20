@@ -13,12 +13,14 @@
 #include <ctime>//for random
 #include "level.h"
 #include "creature.h"
+#include "message.h"
 
 int main()
 {
     //Map levelMap(12, 12);
     Player hero;
-    Level testLevel(&hero);
+    MessageList msgList;
+    Level testLevel(&hero, &msgList);
     initscr();/* Start curses mode*/
     raw();
     noecho();

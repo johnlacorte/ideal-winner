@@ -17,6 +17,7 @@ void MessageList::newMessage(char *msg)
 
 void MessageList::showMessages()
 {
+    //The number 5 would make a nice constant.
     move(0, 0);
     if(numberOfNewMessages > 5)
     {
@@ -54,7 +55,7 @@ void MessageList::showMessages()
     {
         printw("%s\n", *element);
     }
-    for(int i = numberOfMessages; i < 6; ++i)
+    for(int i = numberOfMessages; i < 6; ++i)//Extra newline before map shows.
     {
         printw("\n");
     }
@@ -62,6 +63,8 @@ void MessageList::showMessages()
 
 void MessageList::clearMessages()
 {
+    //For when you start a new game otherwise your recent messages follow
+    //you between levels.
     for(int i = 0; i < numberOfMessages; ++i)
     {
         auto element = messages.cbegin();
@@ -71,3 +74,4 @@ void MessageList::clearMessages()
     numberOfMessages = 0;
     numberOfNewMessages = 0;
 }
+

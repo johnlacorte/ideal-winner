@@ -8,7 +8,7 @@ class Creature
     private:
     char symbol;
     int myX, myY;
-    //A small array or structure or tuple would let me use it as a return value
+
     public:
     Creature *previous, *next;
     Creature();//Probably want to fill in all the data in the constructor
@@ -37,7 +37,7 @@ class Guardian :public Creature
 class Monster :public Creature
 {
     public:
-    int turn(Map *levelMap, int offset);
+    int turn(Map *levelMap, int offset);//An empty function for now.
 };
 
 class CreatureList
@@ -52,8 +52,6 @@ class CreatureList
     void removeFromList(Creature *cre);
     int start();//signal why loop ended, maybe bitmasks.
     //void setCreature(int offset, char sym, int x, int y);
-    //void moveTo(int offset, int x, int y);
-    //void turn(int offset);
 };
 
 #endif

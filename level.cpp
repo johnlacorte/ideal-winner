@@ -13,11 +13,13 @@ Level::Level(Creature *pl, MessageList *ml)
 
 int Level::start()
 {
+    //Insert player and any active guardians into creature list and insert
+    //everything from the creature list into the map.
     int ret;
     creatures.addToList(player);
     player->insertToMap(levelMap, 2);
     ret = creatures.start();
-    //remove everything from the map when done
+    //remove creatures from the map when done
     return ret;
 }
 

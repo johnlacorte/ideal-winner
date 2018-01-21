@@ -1,4 +1,4 @@
-//I need to pass in the player creature
+//The plan is to have some prebuilt levels and some random generated ones.
 #ifndef LEVEL_H
 #include "map.h"
 #include "creature.h"

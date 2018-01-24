@@ -139,6 +139,40 @@ void Map::fillSquare(int x, int y, int w, int h, bool pass, char floor)
         }
     }
 }
+
+void Map::fillLine(int x1, int y1, int x2, int y2, bool pass, char floor)
+{
+    //check if in bounds
+    mapTiles[index(x1, y1)].setTile(pass, floor);
+    while(x1 != x2 || y1 != y2)
+    {
+        if(x1 != x2)
+        {
+            if(x1 > x2)
+            {
+                x1--;
+            }
+	    else
+            {
+                x1++;
+            }
+            mapTiles[index(x1, y1)].setTile(pass, floor);
+        }
+	if(y1 != y2)
+        {
+            if(y1 > y2)
+            {
+                y1--;
+            }
+            else
+            {
+                y1++;
+            }
+            mapTiles[index(x1, y1)].setTile(pass, floor);
+        }
+    }
+}
+
 void Map::insertCreature(int x, int y, int offset, char sym)
 {
     //Same as Tile::insertCreature but takes x and why coordinates of tile.
@@ -171,5 +205,15 @@ bool Map::isPassable(int x, int y)
 void Map::testMap()
 {
     //creates a small open area to move around and interact with things
-    fillSquare(1, 1, 10, 10, true, '.');
+    fillSquare(1, 1, 8, 8, true, '.');
+    fillSquare(28, 8, 8, 8, true, '.');
+    fillLine(5, 5, 32, 12, true, '.');
 }
+
+void Map::randomMap()
+{
+    //Probably just going to punch out some random rectangles and
+    //connect the center points with passages. I might need to add
+    //some variables for level exits to give a jump in point for player.
+}
+

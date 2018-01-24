@@ -26,7 +26,7 @@ int Level::start()
 void Level::test()
 {
     Monster *goblin;
-    levelMap = new Map(12, 12, msgOutput);
+    levelMap = new Map(40, 40, msgOutput);
     levelMap->testMap();
     creatures.setMap(levelMap);
     goblin = new Monster;

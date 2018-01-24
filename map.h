@@ -3,6 +3,16 @@
 
 #include "message.h"
 
+/*struct point
+{
+
+};
+
+struct room
+{
+
+};*/
+
 class Tile//I don't know what to do about things like doors
 {
     private:
@@ -38,6 +48,7 @@ class Map
     void newMessage(char *msg);
     void look(int x, int y, int size);
     void fillSquare(int x, int y, int w, int h, bool pass, char floor);
+    void fillLine(int x1, int y1, int x2, int y2, bool pass, char floor);
     int index( int x, int y );
     void insertCreature(int x, int y, int cre, char sym);
     void removeCreature(int x, int y);
@@ -45,6 +56,7 @@ class Map
     bool isPassable(int x, int y);
     void insertItem(int x, int y, char sym);
     void testMap();
+    void randomMap();
 };
 
 #endif
